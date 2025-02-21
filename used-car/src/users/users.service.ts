@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDto } from './dtos/create-user.dto';
 
@@ -22,6 +22,10 @@ export class UsersService {
       return null;
     }
     return this.repo.findOneBy({ id });
+  }
+
+  findOneBy(options: FindOptionsWhere<User>) {
+    return this.repo.findOne({ where: options });
   }
 
   async update(id: number, data: Partial<User>) {
